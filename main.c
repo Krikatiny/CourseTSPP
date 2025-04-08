@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-
+//NODES
 struct node
 {
   char name[10];
@@ -61,6 +61,11 @@ struct node* insertLeft(struct node* inputNode, char name[10])
   return inputNode->left;
 }
 
+//ARITHMETIC
+
+//TODO Make ARITHMETIC WORKS
+
+//MAIN
 int main(void)
 {
   struct node* myNode = newNode("1");
