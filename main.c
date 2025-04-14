@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+struct node* insertLeft(struct node* inputNode, struct node* newNode);
+struct node* insertLeftNewNode(struct node* inputNode, char name[10]);
+
+struct node* insertRight(struct node* inputNode, struct node* newNode);
+struct node* insertRightNewNode(struct node* inputNode, char name[10]);
+
 //NODES
 struct node
 {
@@ -10,15 +17,15 @@ struct node
   struct node* right;
 };
 
-struct node* newNode(char name[10])
+
+struct node* newNode(const char name[10])
 {
-  struct node* new_node;
-  new_node = malloc(sizeof(struct node));
-  for (int i = 0; new_node->name[i]; i++)
+  struct node* new_node = calloc(1, sizeof(struct node));
+  for (int i = 0; i < 9; i++)
   {
     new_node->name[i] = ' ';
   }
-  for (int i = 0; new_node->name[i]; i++)
+  for (int i = 0; i < 9; i++)
   {
     new_node->name[i] = name[i];
   }
@@ -49,17 +56,6 @@ void printNodeFromTop(struct node* inputNode)
 }
 
 
-struct node* insertRight(struct node* inputNode, char name[10])
-{
-  inputNode->right = newNode(name);
-  return inputNode->right;
-}
-
-struct node* insertLeft(struct node* inputNode, char name[10])
-{
-  inputNode->left = newNode(name);
-  return inputNode->left;
-}
 
 //ARITHMETIC
 
@@ -68,17 +64,46 @@ struct node* insertLeft(struct node* inputNode, char name[10])
 //MAIN
 int main(void)
 {
-  struct node* myNode = newNode("1");
-  struct node* myNodeRight = insertRight(myNode, "R1");
-  struct node* myNodeLeft = insertLeft(myNode, "L1");
-  struct node* myNodeLeft1 = insertLeft(myNodeLeft, "L2");
-  struct node* myNodeLeft2 = insertLeft(myNodeLeft1, "L3");
-  struct node* myNodeLeft3 = insertLeft(myNodeLeft2, "L4");
-  struct node* myNodeLeft4 = insertRight(myNodeLeft3, "R2");
+  struct node* nodes[10];
+  char name[10] = "Hello ";
+  for (int i = 0; i < 10; i++)
+  {
+    name[5] = i + '0';
+    nodes[i] = newNode(name);
+  }
 
-
-  printNodeFromBottom(myNode);
+  insertRight(nodes[0], nodes[1]);
+  insertLeft(nodes[0], nodes[2]);
+  insertRight(nodes[1], nodes[3]);
+  insertLeft(nodes[1], nodes[4]);
+  insertRight(nodes[2], nodes[5]);
+  insertLeft(nodes[6], nodes[0]);
+  printNodeFromTop(nodes[6]);
   printf("\n");
-  printNodeFromTop(myNode);
   return 0;
+}
+
+
+struct node* insertRightNewNode(struct node* inputNode, char name[10])
+{
+  inputNode->right = newNode(name);
+  return inputNode->right;
+}
+
+struct node* insertRight(struct node* inputNode, struct node* newNode)
+{
+  inputNode->right = newNode;
+  return inputNode->right;
+}
+
+struct node* insertLeftNewNode(struct node* inputNode, char name[10])
+{
+  inputNode->left = newNode(name);
+  return inputNode->left;
+}
+
+struct node* insertLeft(struct node* inputNode, struct node* newNode)
+{
+  inputNode->left = newNode;
+  return inputNode->left;
 }
