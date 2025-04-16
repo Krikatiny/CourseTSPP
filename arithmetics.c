@@ -90,7 +90,7 @@ void searchNumberRight(char* arr, char* outArr, int position)
     }
 }
 
-int searchOperator(char* arr, char* outArr, int position)
+int identifyOperator(char* arr, char* outArr, int position)
 {
     clearArr(outArr);
     if (arr[position] == 's' && arr[position + 1] == 'i' && arr[position + 2] == 'n')

@@ -55,6 +55,12 @@ build CMakeFiles/CourseTSPP.dir/main.c.obj: C_COMPILER__CourseTSPP_unscanned_Deb
   OBJECT_DIR = CMakeFiles\CourseTSPP.dir
   OBJECT_FILE_DIR = CMakeFiles\CourseTSPP.dir
 
+build CMakeFiles/CourseTSPP.dir/nodes.c.obj: C_COMPILER__CourseTSPP_unscanned_Debug C$:/Users/zahar/CLionProjects/CourseTSPP/nodes.c || cmake_object_order_depends_target_CourseTSPP
+  DEP_FILE = CMakeFiles\CourseTSPP.dir\nodes.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\CourseTSPP.dir
+  OBJECT_FILE_DIR = CMakeFiles\CourseTSPP.dir
+
 build CMakeFiles/CourseTSPP.dir/arithmetics.c.obj: C_COMPILER__CourseTSPP_unscanned_Debug C$:/Users/zahar/CLionProjects/CourseTSPP/arithmetics.c || cmake_object_order_depends_target_CourseTSPP
   DEP_FILE = CMakeFiles\CourseTSPP.dir\arithmetics.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
@@ -69,7 +75,7 @@ build CMakeFiles/CourseTSPP.dir/arithmetics.c.obj: C_COMPILER__CourseTSPP_unscan
 #############################################
 # Link the executable CourseTSPP.exe
 
-build CourseTSPP.exe: C_EXECUTABLE_LINKER__CourseTSPP_Debug CMakeFiles/CourseTSPP.dir/main.c.obj CMakeFiles/CourseTSPP.dir/arithmetics.c.obj
+build CourseTSPP.exe: C_EXECUTABLE_LINKER__CourseTSPP_Debug CMakeFiles/CourseTSPP.dir/main.c.obj CMakeFiles/CourseTSPP.dir/nodes.c.obj CMakeFiles/CourseTSPP.dir/arithmetics.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\CourseTSPP.dir

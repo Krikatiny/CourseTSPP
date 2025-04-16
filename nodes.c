@@ -45,26 +45,26 @@ void printNodeFromTop(struct node* inputNode)
 }
 
 
-struct node* insertRightNewNode(struct node* inputNode, char name[10])
+struct node* insertRightNewNode(struct node* rootNode, char name[10])
 {
-    inputNode->right = newNode(name);
-    return inputNode->right;
+    rootNode->right = newNode(name);
+    return rootNode->right;
 }
 
-struct node* insertRight(struct node* inputNode, struct node* newNode)
+struct node* insertRight(struct node* rootNode, struct node* rightNode)
 {
-    inputNode->right = newNode;
-    return inputNode->right;
+    rootNode->right = rightNode;
+    return rootNode->right;
 }
 
-struct node* insertLeftNewNode(struct node* inputNode, char name[10])
+struct node* insertLeftNewNode(struct node* rootNode, char name[10])
 {
-    inputNode->left = newNode(name);
-    return inputNode->left;
+    rootNode->left = newNode(name);
+    return rootNode->left;
 }
 
-struct node* insertLeft(struct node* inputNode, struct node* newNode)
+struct node* insertLeft(struct node* rootNode, struct node* leftNode)
 {
-    inputNode->left = newNode;
-    return inputNode->left;
+    rootNode->left = leftNode;
+    return rootNode->left;
 }

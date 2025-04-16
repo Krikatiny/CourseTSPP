@@ -5,7 +5,6 @@ set(CMAKE_C_STANDARD 11)
 
 add_executable(CourseTSPP main.c
         nodes.c
-        nodes.h)
-add_executable(CourseTSPP main.c
+        nodes.h
         arithmetics.c
         arithmetics.h)

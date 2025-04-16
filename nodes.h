@@ -4,12 +4,12 @@
 
 #ifndef NODES_H
 #define NODES_H
-struct node* insertLeft(struct node* inputNode, struct node* newNode);
-struct node* insertLeftNewNode(struct node* inputNode, char name[10]);
+struct node* insertLeft(struct node* rootNode, struct node* leftNode);
+struct node* insertLeftNewNode(struct node* rootNode, char name[10]);
 
 struct node* newNode(const char name[10]);
-struct node* insertRight(struct node* inputNode, struct node* newNode);
-struct node* insertRightNewNode(struct node* inputNode, char name[10]);
+struct node* insertRight(struct node* rootNode, struct node* rightNode);
+struct node* insertRightNewNode(struct node* rootNode, char name[10]);
 
 void printNodeFromBottom(struct node* inputNode);
 void printNodeFromTop(struct node* inputNode);
