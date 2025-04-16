@@ -4,5 +4,8 @@ project(CourseTSPP C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(CourseTSPP main.c
+        nodes.c
+        nodes.h)
+add_executable(CourseTSPP main.c
         arithmetics.c
         arithmetics.h)
