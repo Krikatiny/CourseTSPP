@@ -92,18 +92,38 @@ void searchNumberRight(char* arr, char* outArr, int position)
 
 int standardOperator(char* arr, char* outArr, int position)
 {
-    clearArr(outArr);
     if (arr[position] == 's' && arr[position + 1] == 'i' && arr[position + 2] == 'n')
     {
-        outArr[0] = 's';
-        outArr[1] = 'i';
-        outArr[2] = 'n';
         return 0;
     }
     else
     {
-        outArr[0] = arr[position];
         return 1;
+    }
+}
+
+void getOperator(char* arr, char* outArr, int position)
+{
+    clearArr(outArr);
+    if (arr[position] == 's' && arr[position + 1] == 'i' && arr[position + 2] == 'n')
+    {
+        outArr[position] = 's';
+        outArr[position + 1] = 'i';
+        outArr[position + 2] = 'n';
+    }
+    switch (arr[position])
+    {
+    case '*':
+    case '/':
+    case '%':
+    case '+':
+    case '-':
+    case '^':
+        {
+            outArr[0] = arr[position];
+            break;
+        };
+    default:
     }
 }
 

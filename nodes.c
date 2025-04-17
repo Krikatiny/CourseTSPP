@@ -38,15 +38,15 @@ void printNodeFromBottom(struct node* node)
     printf("%s -> ", node->name);
 }
 
-void printTreeFromTop(struct node* node)
+void printNodeFromTop(struct node* node)
 {
     if (node == NULL)
     {
         return;
     }
     printf("%s -> ", node->name);
-    printTreeFromTop(node->left);
-    printTreeFromTop(node->right);
+    printNodeFromTop(node->left);
+    printNodeFromTop(node->right);
 }
 
 void printNode(struct node* node)
@@ -59,28 +59,45 @@ void printNode(struct node* node)
 }
 
 
-void insertRightNewNode(struct node* rootNode, char name[10])
+void addRightNewNode(struct node* rootNode, char name[10])
 {
     struct node* new_node = newNode(name, 1);
     rootNode->right = new_node;
     new_node->root = rootNode;
 }
 
-void insertRight(struct node* rootNode, struct node* rightNode)
+void addRightNode(struct node* rootNode, struct node* rightNode)
 {
     rootNode->right = rightNode;
     rightNode->root = rootNode;
 }
 
-void insertLeftNewNode(struct node* rootNode, char name[10])
+void addLeftNewNode(struct node* rootNode, char name[10])
 {
     struct node* new_node = newNode(name, 1);
     rootNode->left = new_node;
     new_node->root = rootNode;
 }
 
-void insertLeft(struct node* rootNode, struct node* leftNode)
+void addLeftNode(struct node* rootNode, struct node* leftNode)
 {
     rootNode->left = leftNode;
     leftNode->root = rootNode;
+}
+
+void addRoot(struct node* node, struct node* root)
+{
+    if (root == NULL)
+    {
+        return;
+    }
+    node->root = root;
+    if (root->left == NULL)
+    {
+        root->left = node;
+    }
+    if (root->right == NULL)
+    {
+        root->right = node;
+    }
 }

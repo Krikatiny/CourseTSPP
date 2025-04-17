@@ -16,6 +16,7 @@ void copyArr(char* arr1, char* arr2);
 int getOperationPos(char* arr, int position);
 void searchNumberRight(char* arr, char* outArr, int position);
 int standardOperator(char* arr, char* outArr, int position);
+void getOperator(char* arr, char* outArr, int position);
 void searchNumberLeft(char* arr, char* outArr, int position);
 int calibratePos(char* arr, int position);
 int getLength(char* arr);

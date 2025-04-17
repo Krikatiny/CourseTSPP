@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+
 #include "arithmetics.h"
 #include "nodes.h"
 
@@ -12,11 +13,10 @@ int main()
     char rightNumber[100];
     char leftNumber[100];
     int pos = 0;
+    int length = 0;
 
     struct node* root;
-    struct node* left;
-    struct node* right;
-    struct nodeTree* nodeTree;
+    struct node* temp;
 
     clearArr(input);
     clearArr(refactored);
@@ -29,20 +29,29 @@ int main()
     clearSpaces(refactored);
 
     pos = getOperationPos(refactored, pos);
-    standardOperator(refactored, operator, pos);
-    pos = calibratePos(refactored, pos);
-
+    getOperator(refactored, operator, pos);
     root = newNode(operator, 1);
-/*
-    searchNumberLeft(refactored, leftNumber, pos);
-    left = newNode(leftNumber, 1);
-*/
-    searchNumberRight(refactored, rightNumber, pos);
-    right = newNode(rightNumber, 1);
-//    insertLeft(root, left);
-    insertRight(root, right);
+    length = getLength(refactored);
 
-    printTreeFromTop(root);
+
+    if (standardOperator(refactored, operator, pos) == TRUE)
+    {
+        searchNumberLeft(refactored, leftNumber, pos);
+        addLeftNode(root, newNode(leftNumber, 1));
+    }
+
+    while (pos < length)
+    {
+        if (standardOperator(refactored, operator, pos) == TRUE)
+        {
+            pos = calibratePos(refactored, pos);
+        }
+
+        searchNumberRight(refactored, rightNumber, pos);
+        addRightNode(root, newNode(rightNumber, 1));
+        pos++;
+    }
+    printNodeFromTop(root);
 
     return 0;
 }
