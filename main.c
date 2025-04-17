@@ -16,6 +16,7 @@ int main()
     struct node* root;
     struct node* left;
     struct node* right;
+    struct nodeTree* nodeTree;
 
     clearArr(input);
     clearArr(refactored);
@@ -29,15 +30,18 @@ int main()
 
     pos = getOperationPos(refactored, pos);
     identifyOperator(refactored, operator, pos);
-    root = newNode(operator);
-    searchNumberLeft(refactored, leftNumber, pos);
-    left = newNode(leftNumber);
-    searchNumberRight(refactored, rightNumber, pos);
-    right = newNode(rightNumber);
-    insertLeft(root, left);
-    insertRight(root, right);
 
-    printNodeFromTop(root);
+    root = newNode(operator, 1);
+    nodeTree = newNodeTree(root, "Tree");
+
+    searchNumberLeft(refactored, leftNumber, pos);
+    left = newNode(leftNumber, 1);
+    searchNumberRight(refactored, rightNumber, pos);
+    right = newNode(rightNumber, 1);
+    insertLeft(nodeTree, left);
+    insertRight(nodeTree, right);
+
+    printNodeFromTop(nodeTree);
 
     return 0;
 }
