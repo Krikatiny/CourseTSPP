@@ -7,21 +7,6 @@
 #include <stdlib.h>
 
 
-
-struct node
-{
-    char name[10];
-    int importance;
-};
-
-struct nodeTree
-{
-    char name[10];
-    struct node* root;
-    struct node* left;
-    struct node* right;
-};
-
 struct node* newNode(const char name[10], int importance)
 {
     struct node* new_node = calloc(1, sizeof(struct node));
@@ -36,79 +21,66 @@ struct node* newNode(const char name[10], int importance)
 
     new_node->importance = importance;
 
+    new_node->left = NULL;
+    new_node->right = NULL;
+
     return new_node;
 }
 
-struct nodeTree* newNodeTree(struct node* rootNode, char name[10])
+void printNodeFromBottom(struct node* node)
 {
-    struct nodeTree* newNodeTree = calloc(1, sizeof(struct nodeTree));
-    newNodeTree->root = rootNode;
-    return newNodeTree;
-}
-
-struct nodeTree* newNodeTreeL(struct node* rootNode, struct node* leftNode, char name[10])
-{
-    struct nodeTree* newNodeTree = calloc(1, sizeof(struct nodeTree));
-    newNodeTree->root = rootNode;
-    newNodeTree->left = leftNode;
-    return newNodeTree;
-}
-
-struct nodeTree* newNodeTreeLR(struct node* rootNode, struct node* leftNode, struct node* rightNode, char name[10])
-{
-    struct nodeTree* newNodeTree = calloc(1, sizeof(struct nodeTree));
-    newNodeTree->root = rootNode;
-    newNodeTree->left = leftNode;
-    newNodeTree->right = rightNode;
-    return newNodeTree;
-}
-
-void printNodeFromBottom(struct nodeTree* inputNode)
-{
-    if (inputNode == NULL)
+    if (node == NULL)
     {
         return;
     }
-    printNodeFromBottom(inputNode->left->name);
-    printNodeFromBottom(inputNode->right->name);
-    printf("%s -> ", inputNode->root->name);
+    printNodeFromBottom(node->left);
+    printNodeFromBottom(node->right);
+    printf("%s -> ", node->name);
 }
 
-void printNodeFromTop(struct nodeTree* inputNode)
+void printTreeFromTop(struct node* node)
 {
-    if (inputNode == NULL)
+    if (node == NULL)
     {
         return;
     }
-    printf("%s -> ", inputNode->root->name);
-    printNodeFromTop(inputNode->left->name);
-    printNodeFromTop(inputNode->right->name);
+    printf("%s -> ", node->name);
+    printTreeFromTop(node->left);
+    printTreeFromTop(node->right);
 }
 
-
-struct node* insertRightNewNode(struct nodeTree* rootNode, char name[10])
+void printNode(struct node* node)
 {
-    //TODO CHANGE IMPORTANCE
-
-    rootNode->right = newNode(name, 1);
-    return rootNode->right;
+    if (node == NULL)
+    {
+        return;
+    }
+    printf("%s -> ", node->name);
 }
 
-struct node* insertRight(struct nodeTree* rootNode, struct node* rightNode)
+
+void insertRightNewNode(struct node* rootNode, char name[10])
+{
+    struct node* new_node = newNode(name, 1);
+    rootNode->right = new_node;
+    new_node->root = rootNode;
+}
+
+void insertRight(struct node* rootNode, struct node* rightNode)
 {
     rootNode->right = rightNode;
-    return rootNode->right;
+    rightNode->root = rootNode;
 }
 
-struct node* insertLeftNewNode(struct nodeTree* rootNode, char name[10])
+void insertLeftNewNode(struct node* rootNode, char name[10])
 {
-    //TODO CHANGE IMPORTANCE
-    rootNode->left = newNode(name, 1);
-    return rootNode->left;
+    struct node* new_node = newNode(name, 1);
+    rootNode->left = new_node;
+    new_node->root = rootNode;
 }
 
-struct node* insertLeft(struct nodeTree* rootNode, struct node* leftNode)
+void insertLeft(struct node* rootNode, struct node* leftNode)
 {
     rootNode->left = leftNode;
-    return rootNode->left;
+    leftNode->root = rootNode;
 }

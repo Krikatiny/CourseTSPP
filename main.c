@@ -29,19 +29,20 @@ int main()
     clearSpaces(refactored);
 
     pos = getOperationPos(refactored, pos);
-    identifyOperator(refactored, operator, pos);
+    standardOperator(refactored, operator, pos);
+    pos = calibratePos(refactored, pos);
 
     root = newNode(operator, 1);
-    nodeTree = newNodeTree(root, "Tree");
-
+/*
     searchNumberLeft(refactored, leftNumber, pos);
     left = newNode(leftNumber, 1);
+*/
     searchNumberRight(refactored, rightNumber, pos);
     right = newNode(rightNumber, 1);
-    insertLeft(nodeTree, left);
-    insertRight(nodeTree, right);
+//    insertLeft(root, left);
+    insertRight(root, right);
 
-    printNodeFromTop(nodeTree);
+    printTreeFromTop(root);
 
     return 0;
 }

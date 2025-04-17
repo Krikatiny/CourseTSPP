@@ -90,7 +90,7 @@ void searchNumberRight(char* arr, char* outArr, int position)
     }
 }
 
-int identifyOperator(char* arr, char* outArr, int position)
+int standardOperator(char* arr, char* outArr, int position)
 {
     clearArr(outArr);
     if (arr[position] == 's' && arr[position + 1] == 'i' && arr[position + 2] == 'n')
@@ -173,4 +173,14 @@ int getLength(char* arr)
         }
     }
     return i;
+}
+
+int calibratePos(char* arr, int position)
+{
+    if (arr[position] == 's' && arr[position + 1] == 'i' && arr[position + 2] == 'n')
+    {
+        return position + 2;
+    }
+
+    return position;
 }

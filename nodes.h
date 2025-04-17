@@ -5,22 +5,25 @@
 #ifndef NODES_H
 #define NODES_H
 
-struct node* insertLeft(struct nodeTree* rootNode, struct node* leftNode);
-struct node* insertLeftNewNode(struct nodeTree* rootNode, char name[10]);
+
+struct node
+{
+    char name[10];
+    int importance;
+    struct node* root;
+    struct node* left;
+    struct node* right;
+};
+
+void insertLeft(struct node* rootNode, struct node* leftNode);
+void insertLeftNewNode(struct node* rootNode, char name[10]);
 
 struct node* newNode(const char name[10], int importance);
-struct node* insertRight(struct nodeTree* rootNode, struct node* rightNode);
-struct node* insertRightNewNode(struct nodeTree* rootNode, char name[10]);
+void insertRight(struct node* rootNode, struct node* rightNode);
+void insertRightNewNode(struct node* rootNode, char name[10]);
 
-struct nodeTree* newNodeTree(struct node* rootNode, char name[10]);
-struct nodeTree* newNodeTreeL(struct node* rootNode, struct node* leftNode, char name[10]);
-struct nodeTree* newNodeTreeLR(struct node* rootNode, struct node* leftNode, struct node* rightNode, char name[10]);
-
-void printNodeFromBottom(struct nodeTree* inputNode);
-void printNodeFromTop(struct nodeTree* inputNode);
-
-struct node;
-struct nodeTree;
+void printNodeFromBottom(struct node* node);
+void printTreeFromTop(struct node* node);
 
 
 #endif //NODES_H
