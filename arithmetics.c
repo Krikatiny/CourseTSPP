@@ -82,8 +82,6 @@ int searchNumberRight(char* arr, char* outArr, int position)
             outArr[length] = arr[i];
             length++;
             break;
-        case EOF:
-            return position + length;
         default:
             {
                 length = i;
@@ -93,7 +91,7 @@ int searchNumberRight(char* arr, char* outArr, int position)
     }
 }
 
-int standardOperator(char* arr, char* outArr, int position)
+int standardOperator(char* arr, int position)
 {
     if (arr[position] == 's' && arr[position + 1] == 'i' && arr[position + 2] == 'n')
     {
@@ -110,9 +108,9 @@ int getOperator(char* arr, char* outArr, int position)
     clearArr(outArr);
     if (arr[position] == 's' && arr[position + 1] == 'i' && arr[position + 2] == 'n')
     {
-        outArr[position] = 's';
-        outArr[position + 1] = 'i';
-        outArr[position + 2] = 'n';
+        outArr[0] = 's';
+        outArr[1] = 'i';
+        outArr[2] = 'n';
     }
     switch (arr[position])
     {
@@ -207,4 +205,29 @@ int calibratePos(char* arr, int position)
     }
 
     return position;
+}
+void getNumber(char* arr, char* outArr, int position)
+{
+    for (int i = position; arr[i]; i++)
+    {
+        switch (arr[i])
+        {
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+        case '4':
+        case '5':
+        case '6':
+        case '7':
+        case '8':
+        case '9':
+            outArr[position] = arr[i];
+            break;
+        default:
+            {
+                return;
+            }
+        }
+    }
 }

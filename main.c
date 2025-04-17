@@ -34,42 +34,70 @@ int main()
     pos = getOperationPos(refactored, pos);
     getOperator(refactored, operator, pos);
     nodes[1] = newNode(operator);
-    /*
-    if (standardOperator(refactored, operator, pos) == TRUE)
+
+    if (standardOperator(refactored, pos) == TRUE)
     {
         searchNumberLeft(refactored, leftNumber, pos);
-        addLeftNode(nodes[0], newNode(leftNumber));
+        nodes[0] = newNode(leftNumber);
+        addLeftNode(nodes[1], nodes[0]);
     }
-    nodePos++;
-
-    if (standardOperator(refactored, operator, pos) == FALSE)
+    else
     {
         pos = calibratePos(refactored, pos);
     }
-    */
 
-    searchNumberLeft(refactored, leftNumber, pos);
-    nodes[0] = newNode(leftNumber);
-    addLeftNode(nodes[1], nodes[0]);
-    pos = searchNumberRight(refactored, rightNumber, pos);
-    nodes[2] = newNode(rightNumber);
-    addRightNode(nodes[1], nodes[2]);
-    pos = getOperationPos(refactored, pos);
+    if (getOperationPos(refactored, pos + 1) != pos + 1)
+    {
+        pos = searchNumberRight(refactored, rightNumber, pos);
+        nodes[2] = newNode(rightNumber);
+        addRightNode(nodes[1], nodes[2]);
+    }
+    else
+    {
+        pos = getOperationPos(refactored, pos + 1);
+        getOperator(refactored, operator, pos);
+        nodes[2] = newNode(operator);
+        addRightNode(nodes[1], nodes[2]);
+    };
+    if (getOperationPos(refactored, pos) == pos)
+    {
+        pos = calibratePos(refactored, pos);
+    }
+    else
+    {
+        pos = getOperationPos(refactored, pos);
+    }
+
     nodePos = nodePos + 3;
 
     while (pos < length - 1)
     {
+        getNumber(refactored, rightNumber, pos);
         if (getOperator(refactored, operator, pos) == -1)
         {
             break;
         }
-        nodes[nodePos] = newNode(operator);
-        searchNumberRight(refactored, rightNumber, pos);
-        pos = getOperationPos(refactored, pos+1);
-        nodes[nodePos + 1] = newNode(rightNumber);
-        addRightNode(nodes[nodePos], nodes[nodePos + 1]);
-        addLeftNode(nodes[nodePos], nodes[nodePos - 2]);
-        nodePos = nodePos + 2;
+        if (standardOperator(refactored, pos) == TRUE)
+        {
+            nodes[nodePos] = newNode(operator);
+            searchNumberRight(refactored, rightNumber, pos);
+            pos = getOperationPos(refactored, pos + 1);
+            nodes[nodePos + 1] = newNode(rightNumber);
+            addRightNode(nodes[nodePos], nodes[nodePos + 1]);
+            addLeftNode(nodes[nodePos], nodes[nodePos - 2]);
+            nodePos = nodePos + 2;
+        }
+
+        else
+        {
+            pos = getOperationPos(refactored, pos);
+            getOperator(refactored, operator, pos);
+            nodes[nodePos] = newNode(operator);
+            searchNumberRight(refactored, rightNumber, pos);
+            pos = getOperationPos(refactored, pos);
+            nodes[nodePos + 1] = newNode(rightNumber);
+            nodePos = nodePos + 2;
+        }
     }
     printNodeFromTop(nodes[1]);
     return 0;
