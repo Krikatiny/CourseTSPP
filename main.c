@@ -12,11 +12,12 @@ int main()
     char operator[100];
     char rightNumber[100];
     char leftNumber[100];
+    int nodePos = 0;
     int pos = 0;
     int length = 0;
 
-    struct node* root;
-    struct node* temp;
+
+    struct node* nodes[100];
 
     clearArr(input);
     clearArr(refactored);
@@ -28,30 +29,48 @@ int main()
     copyArr(input, refactored);
     clearSpaces(refactored);
 
-    pos = getOperationPos(refactored, pos);
-    getOperator(refactored, operator, pos);
-    root = newNode(operator, 1);
     length = getLength(refactored);
 
-
+    pos = getOperationPos(refactored, pos);
+    getOperator(refactored, operator, pos);
+    nodes[1] = newNode(operator);
+    /*
     if (standardOperator(refactored, operator, pos) == TRUE)
     {
         searchNumberLeft(refactored, leftNumber, pos);
-        addLeftNode(root, newNode(leftNumber, 1));
+        addLeftNode(nodes[0], newNode(leftNumber));
     }
+    nodePos++;
 
-    while (pos < length)
+    if (standardOperator(refactored, operator, pos) == FALSE)
     {
-        if (standardOperator(refactored, operator, pos) == TRUE)
-        {
-            pos = calibratePos(refactored, pos);
-        }
-
-        searchNumberRight(refactored, rightNumber, pos);
-        addRightNode(root, newNode(rightNumber, 1));
-        pos++;
+        pos = calibratePos(refactored, pos);
     }
-    printNodeFromTop(root);
+    */
 
+    searchNumberLeft(refactored, leftNumber, pos);
+    nodes[0] = newNode(leftNumber);
+    addLeftNode(nodes[1], nodes[0]);
+    pos = searchNumberRight(refactored, rightNumber, pos);
+    nodes[2] = newNode(rightNumber);
+    addRightNode(nodes[1], nodes[2]);
+    pos = getOperationPos(refactored, pos);
+    nodePos = nodePos + 3;
+
+    while (pos < length - 1)
+    {
+        if (getOperator(refactored, operator, pos) == -1)
+        {
+            break;
+        }
+        nodes[nodePos] = newNode(operator);
+        searchNumberRight(refactored, rightNumber, pos);
+        pos = getOperationPos(refactored, pos+1);
+        nodes[nodePos + 1] = newNode(rightNumber);
+        addRightNode(nodes[nodePos], nodes[nodePos + 1]);
+        addLeftNode(nodes[nodePos], nodes[nodePos - 2]);
+        nodePos = nodePos + 2;
+    }
+    printNodeFromTop(nodes[1]);
     return 0;
 }

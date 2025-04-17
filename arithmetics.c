@@ -59,8 +59,8 @@ void copyArr(char* arr1, char* arr2)
         arr2[i] = arr1[i];
     }
 }
-
-void searchNumberRight(char* arr, char* outArr, int position)
+//return pos of last digit
+int searchNumberRight(char* arr, char* outArr, int position)
 {
     char number[100];
     clearArr(number);
@@ -82,9 +82,12 @@ void searchNumberRight(char* arr, char* outArr, int position)
             outArr[length] = arr[i];
             length++;
             break;
+        case EOF:
+            return position + length;
         default:
             {
-                return;
+                length = i;
+                return length;
             }
         }
     }
@@ -102,7 +105,7 @@ int standardOperator(char* arr, char* outArr, int position)
     }
 }
 
-void getOperator(char* arr, char* outArr, int position)
+int getOperator(char* arr, char* outArr, int position)
 {
     clearArr(outArr);
     if (arr[position] == 's' && arr[position + 1] == 'i' && arr[position + 2] == 'n')
@@ -124,6 +127,7 @@ void getOperator(char* arr, char* outArr, int position)
             break;
         };
     default:
+        return -1;
     }
 }
 
