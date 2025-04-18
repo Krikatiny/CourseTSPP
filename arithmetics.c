@@ -99,6 +99,18 @@ int standardOperator(char* arr, int position)
     {
         return 0;
     }
+    if (arr[position] == 'c' && arr[position + 1] == 'o' && arr[position + 2] == 's')
+    {
+        return 0;
+    }
+    if (arr[position] == 't' && arr[position + 1] == 'a' && arr[position + 2] == 'n')
+    {
+        return 0;
+    }
+    if (arr[position] == 'c' && arr[position + 1] == 't' && arr[position + 2] == 'a' && arr[position + 3] == 'n')
+    {
+        return 0;
+    }
     else
     {
         return 1;
@@ -114,8 +126,39 @@ int getOperator(char* arr, char* outArr, int position)
         outArr[1] = 'i';
         outArr[2] = 'n';
         arr[position] = ' ';
-        arr[position+1] = ' ';
-        arr[position+2] = ' ';
+        arr[position + 1] = ' ';
+        arr[position + 2] = ' ';
+    }
+
+    if (arr[position] == 'c' && arr[position + 1] == 'o' && arr[position + 2] == 's')
+    {
+        outArr[0] = 'c';
+        outArr[1] = 'o';
+        outArr[2] = 's';
+        arr[position] = ' ';
+        arr[position + 1] = ' ';
+        arr[position + 2] = ' ';
+    }
+    if (arr[position] == 't' && arr[position + 1] == 'a' && arr[position + 2] == 'n')
+    {
+        outArr[0] = 't';
+        outArr[1] = 'a';
+        outArr[2] = 'n';
+        arr[position] = ' ';
+        arr[position + 1] = ' ';
+        arr[position + 2] = ' ';
+    }
+    if (arr[position] == 'c' && arr[position + 1] == 't' && arr[position + 2] == 'a' && arr[position + 3] == 'n')
+    {
+        outArr[0] = 'c';
+        outArr[1] = 't';
+        outArr[2] = 'a';
+        outArr[3] = 'n';
+        outArr[4] = '\0';
+        arr[position] = ' ';
+        arr[position + 1] = ' ';
+        arr[position + 2] = ' ';
+        arr[position + 3] = ' ';
     }
     switch (arr[position])
     {
@@ -170,7 +213,8 @@ int getOperationPos(char* arr, int position)
 {
     for (int i = position; arr[i]; i++)
     {
-        if (arr[i] == '+' || arr[i] == '-' || arr[i] == '*' || arr[i] == '/' || arr[i] == 's')
+        if (arr[i] == '+' || arr[i] == '-' || arr[i] == '*' || arr[i] == '/' || arr[i] == 's' || arr[i] == 'c' || arr[i]
+            == 't')
         {
             return i;
         }
@@ -197,6 +241,20 @@ int calibratePos(char* arr, int position)
     {
         return position + 2;
     }
+    if (arr[position] == 'c' && arr[position + 1] == 't' && arr[position + 2] == 'a' && arr[position + 3] == 'n')
+    {
+        return position + 3;
+    }
+    if (arr[position] == 'c' && arr[position + 1] == 'o' && arr[position + 2] == 's')
+    {
+        return position + 2;
+    }
+
+    if (arr[position] == 't' && arr[position + 1] == 'a' && arr[position + 2] == 'n')
+    {
+        return position + 2;
+    }
+
 
     return position;
 }
