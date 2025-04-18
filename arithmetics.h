@@ -21,5 +21,6 @@ void searchNumberLeft(char* arr, char* outArr, int position);
 int calibratePos(char* arr, int position);
 int getLength(char* arr);
 void getNumber(char* arr, char* outArr, int position);
+int getLengthWithoutSpaces(char* arr);
 
 #endif //ARITHMETICS_H

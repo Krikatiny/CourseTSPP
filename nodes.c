@@ -87,11 +87,11 @@ void printNode(struct node* node)
         printf("%s -> ", node->name);
     if (node->left != NULL)
     {
-        printNode(node->right);
-    }
-    if (node->left != NULL)
-    {
         printNode(node->left);
+    }
+    if (node->right != NULL)
+    {
+        printNode(node->right);
     }
 }
 

@@ -18,7 +18,8 @@ int main()
 
 
     struct node* nodes[100];
-
+    int latestOperationNodeNum = 0;
+    int nodesAdded = 0;
     clearArr(input);
     clearArr(refactored);
     clearArr(operator);
@@ -31,74 +32,76 @@ int main()
 
     length = getLength(refactored);
 
-    pos = getOperationPos(refactored, pos);
-    getOperator(refactored, operator, pos);
-    nodes[1] = newNode(operator);
+    /*  1 + sin2
+     *  1+2+3+4
+     *  sin2 + 1
+     *  1. Очищаємо масив від зайвого
+     *  2. Заходимо в масив та шукаємо оператор
+     *  3. Створюємо для нього ноду
+     *  4. Якщо це бінарний оператор, то шукаємо ліворуч число та праворуч.
+     *  5. Якщо праворуч знаходиться не число, то треба визначити той оператор
+     *  6. Якщо це унарний, то створюємо для нього ноду та шукаємо праворуч
+     *  6. Якщо це унарний, то шукаємо праворуч число
+     *  7. Переходимо до точки правого числа
+     *  8.
+     */
 
-    if (standardOperator(refactored, pos) == TRUE)
+    while (length > 0)
     {
-        searchNumberLeft(refactored, leftNumber, pos);
-        nodes[0] = newNode(leftNumber);
-        addLeftNode(nodes[1], nodes[0]);
-    }
-    else
-    {
-        pos = calibratePos(refactored, pos);
-    }
-
-    if (getOperationPos(refactored, pos + 1) != pos + 1)
-    {
-        pos = searchNumberRight(refactored, rightNumber, pos);
-        nodes[2] = newNode(rightNumber);
-        addRightNode(nodes[1], nodes[2]);
-    }
-    else
-    {
-        pos = getOperationPos(refactored, pos + 1);
-        getOperator(refactored, operator, pos);
-        nodes[2] = newNode(operator);
-        addRightNode(nodes[1], nodes[2]);
-    };
-    if (getOperationPos(refactored, pos) == pos)
-    {
-        pos = calibratePos(refactored, pos);
-    }
-    else
-    {
-        pos = getOperationPos(refactored, pos);
-    }
-
-    nodePos = nodePos + 3;
-
-    while (pos < length - 1)
-    {
-        getNumber(refactored, rightNumber, pos);
-        if (getOperator(refactored, operator, pos) == -1)
+        nodesAdded = 0;
+        if (getOperationPos(refactored, pos) == -1)
         {
+            searchNumberRight(refactored, rightNumber, pos);
+            nodes[nodePos] = newNode(rightNumber);
+            nodes[latestOperationNodeNum]->right = nodes[nodePos];
+            nodes[nodePos]->root = nodes[latestOperationNodeNum];
             break;
         }
-        if (standardOperator(refactored, pos) == TRUE)
+        pos = getOperationPos(refactored, pos);
+        getOperator(refactored, operator, pos);
+        nodes[nodePos] = newNode(operator);
+        nodesAdded++;
+        if (nodePos != 0)
         {
-            nodes[nodePos] = newNode(operator);
-            searchNumberRight(refactored, rightNumber, pos);
-            pos = getOperationPos(refactored, pos + 1);
-            nodes[nodePos + 1] = newNode(rightNumber);
-            addRightNode(nodes[nodePos], nodes[nodePos + 1]);
-            addLeftNode(nodes[nodePos], nodes[nodePos - 2]);
-            nodePos = nodePos + 2;
+            if (nodes[latestOperationNodeNum]->right == NULL)
+            {
+                nodes[nodePos]->root = nodes[latestOperationNodeNum];
+                nodes[latestOperationNodeNum]->right = nodes[nodePos];
+            }
+            else
+            {
+                nodes[latestOperationNodeNum]->root = nodes[nodePos];
+            }
         }
+        latestOperationNodeNum = nodePos;
 
+
+        //Operator check
+        if (standardOperator(operator, 0) == TRUE)
+        {
+            searchNumberLeft(refactored, leftNumber, pos);
+            if (getLength(leftNumber) != 0)
+            {
+                nodes[nodePos + 1] = newNode(leftNumber);
+                nodesAdded++;
+                addLeftNode(nodes[nodePos], nodes[nodePos + 1]);
+            }
+            if (getOperationPos(refactored, pos) == -1)
+            {
+                searchNumberRight(refactored, rightNumber, pos);
+                nodes[nodePos + 2] = newNode(rightNumber);
+                nodesAdded++;
+                addRightNode(nodes[nodePos], nodes[nodePos + 2]);
+            }
+            nodePos = nodePos + nodesAdded;
+        }
         else
         {
-            pos = getOperationPos(refactored, pos);
-            getOperator(refactored, operator, pos);
-            nodes[nodePos] = newNode(operator);
-            searchNumberRight(refactored, rightNumber, pos);
-            pos = getOperationPos(refactored, pos);
-            nodes[nodePos + 1] = newNode(rightNumber);
-            nodePos = nodePos + 2;
+            pos = pos + getLength(operator) - 1;
+            nodePos = nodePos + nodesAdded;
         }
+        length = getLengthWithoutSpaces(refactored);
     }
-    printNodeFromTop(nodes[1]);
+    printNodeFromTop(nodes[0]);
     return 0;
 }

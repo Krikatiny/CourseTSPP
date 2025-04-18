@@ -59,6 +59,7 @@ void copyArr(char* arr1, char* arr2)
         arr2[i] = arr1[i];
     }
 }
+
 //return pos of last digit
 int searchNumberRight(char* arr, char* outArr, int position)
 {
@@ -80,6 +81,7 @@ int searchNumberRight(char* arr, char* outArr, int position)
         case '9':
         case '0':
             outArr[length] = arr[i];
+            arr[i] = ' ';
             length++;
             break;
         default:
@@ -111,6 +113,9 @@ int getOperator(char* arr, char* outArr, int position)
         outArr[0] = 's';
         outArr[1] = 'i';
         outArr[2] = 'n';
+        arr[position] = ' ';
+        arr[position+1] = ' ';
+        arr[position+2] = ' ';
     }
     switch (arr[position])
     {
@@ -122,6 +127,7 @@ int getOperator(char* arr, char* outArr, int position)
     case '^':
         {
             outArr[0] = arr[position];
+            arr[position] = ' ';
             break;
         };
     default:
@@ -149,6 +155,7 @@ void searchNumberLeft(char* arr, char* outArr, int position)
         case '9':
         case '0':
             outArr[length] = arr[i];
+            arr[i] = ' ';
             length++;
             break;
         default:
@@ -163,25 +170,12 @@ int getOperationPos(char* arr, int position)
 {
     for (int i = position; arr[i]; i++)
     {
-        switch (arr[i])
+        if (arr[i] == '+' || arr[i] == '-' || arr[i] == '*' || arr[i] == '/' || arr[i] == 's')
         {
-        case '0':
-        case '1':
-        case '2':
-        case '3':
-        case '4':
-        case '5':
-        case '6':
-        case '7':
-        case '8':
-        case '9':
-            break;
-        default:
-            {
-                return i;
-            }
+            return i;
         }
     }
+    return -1;
 };
 
 int getLength(char* arr)
@@ -206,6 +200,7 @@ int calibratePos(char* arr, int position)
 
     return position;
 }
+
 void getNumber(char* arr, char* outArr, int position)
 {
     for (int i = position; arr[i]; i++)
@@ -230,4 +225,17 @@ void getNumber(char* arr, char* outArr, int position)
             }
         }
     }
+}
+
+int getLengthWithoutSpaces(char* arr)
+{
+    int length = 0;
+    for (int i = 0; arr[i]; i++)
+    {
+        if (arr[i] != ' ')
+        {
+            length++;
+        }
+    }
+    return length;
 }
