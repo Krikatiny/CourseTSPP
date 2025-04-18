@@ -4,30 +4,30 @@
 
 #ifndef NODES_H
 #define NODES_H
+#include <stdio.h>
 
 
 struct node
 {
     char name[10];
     int importance;
+    int num;
     struct node* root;
     struct node* left;
     struct node* right;
 };
 
 void addLeftNode(struct node* rootNode, struct node* leftNode);
-void addLeftNewNode(struct node* rootNode, char name[10]);
 
-struct node* newNode(const char name[10]);
+struct node* newNode(const char name[10], int num);
 void addRightNode(struct node* rootNode, struct node* rightNode);
-void addRightNewNode(struct node* rootNode, char name[10]);
 
-void printNode(struct node* node);
+void printNode(struct node* node, FILE* file);
 
 void addRoot(struct node* node, struct node* root);
 int setImportance(struct node* rootNode);
 
 void printNodeFromBottom(struct node* node);
-void printNodeFromTop(struct node* node);
+void printNodeFromTop(struct node* node, FILE* file);
 
 #endif //NODES_H

@@ -7,6 +7,10 @@
 
 int main()
 {
+    FILE *file;
+    file = fopen("input.gv", "w");
+    fprintf(file, "graph G{\n");
+    fclose(file);
     char input[100];
     char refactored[100];
     char operator[100];
@@ -15,7 +19,7 @@ int main()
     int nodePos = 0;
     int pos = 0;
     int length = 0;
-
+    int nodeChange = 0;
 
     struct node* nodes[100];
     int latestOperationNodeNum = 0;
@@ -52,14 +56,16 @@ int main()
         if (getOperationPos(refactored, pos) == -1)
         {
             searchNumberRight(refactored, rightNumber, pos);
-            nodes[nodePos] = newNode(rightNumber);
+            nodes[nodePos] = newNode(rightNumber,nodeChange);
+            nodeChange++;
             nodes[latestOperationNodeNum]->right = nodes[nodePos];
             nodes[nodePos]->root = nodes[latestOperationNodeNum];
             break;
         }
         pos = getOperationPos(refactored, pos);
         getOperator(refactored, operator, pos);
-        nodes[nodePos] = newNode(operator);
+        nodes[nodePos] = newNode(operator, nodeChange);
+        nodeChange++;
         nodesAdded++;
         if (nodePos != 0)
         {
@@ -82,14 +88,16 @@ int main()
             searchNumberLeft(refactored, leftNumber, pos);
             if (getLength(leftNumber) != 0)
             {
-                nodes[nodePos + 1] = newNode(leftNumber);
+                nodes[nodePos + 1] = newNode(leftNumber, nodeChange);
+                nodeChange++;
                 nodesAdded++;
                 addLeftNode(nodes[nodePos], nodes[nodePos + 1]);
             }
             if (getOperationPos(refactored, pos) == -1)
             {
                 searchNumberRight(refactored, rightNumber, pos);
-                nodes[nodePos + 2] = newNode(rightNumber);
+                nodes[nodePos + 2] = newNode(rightNumber, nodeChange);
+                nodeChange++;
                 nodesAdded++;
                 addRightNode(nodes[nodePos], nodes[nodePos + 2]);
             }
@@ -102,6 +110,9 @@ int main()
         }
         length = getLengthWithoutSpaces(refactored);
     }
-    printNodeFromTop(nodes[0]);
+    printNodeFromTop(nodes[0], file);
+    file = fopen("input.gv", "ab+");
+    fprintf(file, "}");
+    fclose(file);
     return 0;
 }

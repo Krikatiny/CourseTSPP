@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 
-struct node* newNode(const char name[10])
+struct node* newNode(const char name[10], int num)
 {
     struct node* new_node = calloc(1, sizeof(struct node));
     for (int i = 0; i < 9; i++)
@@ -20,7 +20,7 @@ struct node* newNode(const char name[10])
     }
 
     new_node->importance = setImportance(new_node);
-
+    new_node->num = num;
     new_node->left = NULL;
     new_node->right = NULL;
 
@@ -29,11 +29,10 @@ struct node* newNode(const char name[10])
 
 int setImportance(struct node* node)
 {
-
     if (node == NULL)
         return -1;
 
-    if (node-> name =="+"|| node-> name =="-")
+    if (node->name == "+" || node->name == "-")
     {
         return 1;
     }
@@ -46,7 +45,7 @@ int setImportance(struct node* node)
     {
         return 3;
     }
-       return 0;
+    return 0;
 }
 
 void printNodeFromBottom(struct node* node)
@@ -60,7 +59,7 @@ void printNodeFromBottom(struct node* node)
     printf("%s -> ", node->name);
 }
 
-void printNodeFromTop(struct node* node)
+void printNodeFromTop(struct node* node, FILE* file)
 {
     if (node == NULL)
     {
@@ -69,50 +68,42 @@ void printNodeFromTop(struct node* node)
     if (node->root == NULL)
     {
         printf("%s -> ", node->name);
-        printNode(node->left);
-        printNode(node->right);
+        printNode(node->left, file);
+        printNode(node->right, file);
     }
     else
     {
-        printNodeFromTop(node->root);
+        printNodeFromTop(node->root, file);
     }
 }
 
-void printNode(struct node* node)
+void printNode(struct node* node, FILE* file)
 {
     if (node == NULL)
     {
         return;
     }
-        printf("%s -> ", node->name);
+    file = fopen("input.gv", "ab+");
+    char table[52] = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
+    // %s[label=\"\"%s\"\"]\n - table[node->num]
+    fprintf(file, "%c[label=\"%s\"]\n", table[node->root->num], node->root->name);
+    fprintf(file, "%c[label=\"%s\"]\n",table[node->num],  node->name);
+    fprintf(file, "%c -- %c\n", table[node->root->num], table[node->num]);
     if (node->left != NULL)
     {
-        printNode(node->left);
+        printNode(node->left, file);
     }
     if (node->right != NULL)
     {
-        printNode(node->right);
+        printNode(node->right, file);
     }
-}
-
-void addRightNewNode(struct node* rootNode, char name[10])
-{
-    struct node* new_node = newNode(name);
-    rootNode->right = new_node;
-    new_node->root = rootNode;
+    fclose(file);
 }
 
 void addRightNode(struct node* rootNode, struct node* rightNode)
 {
     rootNode->right = rightNode;
     rightNode->root = rootNode;
-}
-
-void addLeftNewNode(struct node* rootNode, char name[10])
-{
-    struct node* new_node = newNode(name);
-    rootNode->left = new_node;
-    new_node->root = rootNode;
 }
 
 void addLeftNode(struct node* rootNode, struct node* leftNode)
