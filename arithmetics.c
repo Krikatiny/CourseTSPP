@@ -52,11 +52,11 @@ void clearSpaces(char* arr)
 }
 
 //Copy arr1 into arr2
-void copyArr(char* arr1, char* arr2)
+void copyArr(char* fromArr, char* toArr)
 {
-    for (int i = 0; arr1[i]; i++)
+    for (int i = 0; fromArr[i]; i++)
     {
-        arr2[i] = arr1[i];
+        toArr[i] = fromArr[i];
     }
 }
 

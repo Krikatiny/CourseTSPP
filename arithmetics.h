@@ -12,7 +12,7 @@
 void clearArr(char* arr);
 void getInputInArr(char* arr);
 void clearSpaces(char* arr);
-void copyArr(char* arr1, char* arr2);
+void copyArr(char* fromArr, char* toArr);
 int getOperationPos(char* arr, int position);
 int searchNumberRight(char* arr, char* outArr, int position);
 int standardOperator(char* arr, int position);

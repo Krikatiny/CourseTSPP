@@ -26,6 +26,7 @@ void printNode(struct node* node, FILE* file);
 
 void addRoot(struct node* node, struct node* root);
 int setImportance(struct node* rootNode);
+int importanceTest(struct node* root);
 
 void printNodeFromBottom(struct node* node);
 void printNodeFromTop(struct node* node, FILE* file);

@@ -5,6 +5,9 @@
 #include "nodes.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
+#include "arithmetics.h"
 
 
 struct node* newNode(const char name[10], int num)
@@ -32,20 +35,20 @@ int setImportance(struct node* node)
     if (node == NULL)
         return -1;
 
-    if (node->name == "+" || node->name == "-")
+    if (node->name[0] == '+' || node->name[0] == '-')
     {
         return 1;
     }
 
-    if (node->name == "*" || node->name == "/" || node->name == "%" || node->name == "sin")
+    if (node->name[0] == '*' || node->name[0] == '/' || node->name[0] == '%' || node->name[0] == 's' || node->name[0] == 't' || node->name[0] == 'c')
     {
         return 2;
     }
-    if (node->name == "^")
+    if (node->name[0] == '^')
     {
         return 3;
     }
-    return 0;
+    return 10;
 }
 
 void printNodeFromBottom(struct node* node)
@@ -67,7 +70,6 @@ void printNodeFromTop(struct node* node, FILE* file)
     }
     if (node->root == NULL)
     {
-        printf("%s -> ", node->name);
         printNode(node->left, file);
         printNode(node->right, file);
     }
@@ -87,7 +89,7 @@ void printNode(struct node* node, FILE* file)
     char table[52] = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM";
     // %s[label=\"\"%s\"\"]\n - table[node->num]
     fprintf(file, "%c[label=\"%s\"]\n", table[node->root->num], node->root->name);
-    fprintf(file, "%c[label=\"%s\"]\n",table[node->num],  node->name);
+    fprintf(file, "%c[label=\"%s\"]\n", table[node->num], node->name);
     fprintf(file, "%c -- %c\n", table[node->root->num], table[node->num]);
     if (node->left != NULL)
     {
@@ -127,4 +129,35 @@ void addRoot(struct node* node, struct node* root)
     {
         root->right = node;
     }
+}
+
+int importanceTest(struct node* root)
+{
+    if (root == NULL) { return; }
+
+    if (root->left != NULL)
+    {
+        if (root->importance < root->left->importance)
+        {
+            char name[100];
+            clearArr(name);
+            copyArr(root->name, name);
+            copyArr(root->left->name, root->name);
+            copyArr(name, root->left->name);
+            return 0;
+        }
+    }
+    if (root->right != NULL)
+    {
+        if (root->importance < root->right->importance)
+        {
+            char name[100];
+            clearArr(name);
+            copyArr(root->name, name);
+            copyArr(root->right->name, root->name);
+            copyArr(name, root->right->name);
+            return 0;
+        }
+    }
+    return 1;
 }
