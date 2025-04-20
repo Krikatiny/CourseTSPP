@@ -29,7 +29,7 @@ int main()
     clearArr(operator);
     clearArr(rightNumber);
     clearArr(leftNumber);
-
+    printf("Enter your problem:\n");
     getInputInArr(input);
     copyArr(input, refactored);
     clearSpaces(refactored);
