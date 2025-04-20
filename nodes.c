@@ -51,18 +51,7 @@ int setImportance(struct node* node)
     return 10;
 }
 
-void printNodeFromBottom(struct node* node)
-{
-    if (node == NULL)
-    {
-        return;
-    }
-    printNodeFromBottom(node->left);
-    printNodeFromBottom(node->right);
-    printf("%s -> ", node->name);
-}
-
-void printNodeFromTop(struct node* node, FILE* file)
+void printNodes(struct node* node, FILE* file)
 {
     if (node == NULL)
     {
@@ -75,7 +64,7 @@ void printNodeFromTop(struct node* node, FILE* file)
     }
     else
     {
-        printNodeFromTop(node->root, file);
+        printNodes(node->root, file);
     }
 }
 
